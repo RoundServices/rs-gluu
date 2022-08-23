@@ -300,7 +300,8 @@ class OxTrustAPIClient:
         """
         config_endpoints = ["configuration/oxauth/settings",
                             "configuration/oxtrust/settings",
-                            "configuration/settings"
+                            "configuration/settings",
+                            "configuration/smtp"
                             ]
         available_endpoints = {
             'attributes': 'attributes',
