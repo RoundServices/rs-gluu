@@ -307,7 +307,8 @@ class OxTrustAPIClient:
             'clients': 'clients',
             'scopes': 'scopes',
             'configuration/scripts': 'scripts',
-            'passport/providers': 'passport/providers'
+            'passport/providers': 'passport/providers',
+            'configuration/ldap': 'configuration/ldap'
         }
         if endpoint in config_endpoints:
             current_obj = self.uma_client.execute("GET", endpoint)
