@@ -309,7 +309,8 @@ class OxTrustAPIClient:
             'clients': 'clients',
             'scopes': 'scopes',
             'configuration/scripts': 'scripts',
-            'passport/providers': 'passport/providers'
+            'passport/providers': 'passport/providers',
+            'saml/tr/update': 'saml/tr/update'
         }
         if endpoint in config_endpoints:
             current_obj = self.uma_client.execute("GET", endpoint)
@@ -319,10 +320,12 @@ class OxTrustAPIClient:
             for key, value in json_obj.items():
                 current_obj[key] = value
         elif endpoint in available_endpoints:
-            if endpoint != 'passport/providers':
+            if endpoint not in ['passport/providers', 'saml/tr/update']:
                 dn = "inum={},ou={},o=gluu".format(json_obj['inum'], available_endpoints[endpoint])
                 self.logger.debug("adding dn for update: {}", dn)
                 json_obj['dn'] = dn
+            if endpoint == 'saml/tr/update':
+                endpoint = "{}/{}".format(endpoint, json_obj.get('inum'))
             current_obj = json_obj
         else:
             validators.raise_and_log(self.logger, ValueError, "operation endpoint {} is not supported for update",
@@ -345,11 +348,26 @@ class OxTrustAPIClient:
             inum = json_obj[key]
         else:
             inum = json_obj[key]
-        if inum is None:
+        if inum is None or endpoint == 'saml/tr':
             return self.create(endpoint, json_obj)
         try:
-            response = self.get_by_inum(endpoint, json_obj, key)
-            self.logger.debug("get_by_inum for update operation result is: {}", response)
+            if endpoint == 'saml/tr':
+                self.logger.debug("SAML Upsert requested, getting values from displayName attr")
+                tr_list = self.uma_client.execute("GET", "saml/tr/list")
+                tr_list = [ tr.get('displayName') == json_obj['displayName'] for tr in tr_list ]
+                tr_list_size = len(tr_list)
+                if tr_list_size == 0:
+                    self.logger.debug("create a new tr with given values")
+                    return self.create("saml/tr/create", json_obj)
+                elif tr_list_size == 1:
+                    self.logger.debug("update a existing tr")
+                    json_obj['inum'] = tr_list[0].get('inum')
+                    return self.update("saml/tr/update", json_obj)
+                else:
+                    validators.raise_and_log(self.logger, ValueError, "duplicated displayName obj for Trust relationship, stopped UPSERT operation", endpoint)
+            else:
+                response = self.get_by_inum(endpoint, json_obj, key)
+                self.logger.debug("get_by_inum for update operation result is: {}", response)
             if isinstance(response, dict) and ('inum' in response or 'id' in response):
                 self.logger.debug("Updating object with inum: {}", inum)
                 return self.update(endpoint, json_obj)
@@ -358,8 +376,6 @@ class OxTrustAPIClient:
         except IOError:
             self.logger.debug("Object does not exist, lets create it...")
             return self.create(endpoint, json_obj)
-        validators.raise_and_log(self.logger, ValueError,
-                                 "Object with inum {} , can not be updated, see the logs for more information", inum)
 
     def get_by_inum(self, endpoint, json_obj, key='inum'):
         """
