@@ -300,15 +300,15 @@ class OxTrustAPIClient:
         """
         config_endpoints = ["configuration/oxauth/settings",
                             "configuration/oxtrust/settings",
-                            "configuration/settings"
+                            "configuration/settings",
+                            "configuration/ldap': 'configuration/ldap"
                             ]
         available_endpoints = {
             'attributes': 'attributes',
             'clients': 'clients',
             'scopes': 'scopes',
             'configuration/scripts': 'scripts',
-            'passport/providers': 'passport/providers',
-            'configuration/ldap': 'configuration/ldap'
+            'passport/providers': 'passport/providers'
         }
         if endpoint in config_endpoints:
             current_obj = self.uma_client.execute("GET", endpoint)
