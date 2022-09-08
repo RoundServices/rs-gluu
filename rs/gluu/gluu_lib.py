@@ -301,7 +301,7 @@ class OxTrustAPIClient:
         config_endpoints = ["configuration/oxauth/settings",
                             "configuration/oxtrust/settings",
                             "configuration/settings",
-                            "configuration/ldap': 'configuration/ldap"
+                            "configuration/ldap"
                             ]
         available_endpoints = {
             'attributes': 'attributes',
