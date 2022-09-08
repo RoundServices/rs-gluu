@@ -346,9 +346,11 @@ class OxTrustAPIClient:
         if endpoint == 'passport/providers':
             key = 'id'
             inum = json_obj[key]
+        elif endpoint == 'saml/tr':
+            inum = "fake_value"
         else:
             inum = json_obj[key]
-        if inum is None or endpoint == 'saml/tr':
+        if inum is None:
             return self.create(endpoint, json_obj)
         try:
             if endpoint == 'saml/tr':
