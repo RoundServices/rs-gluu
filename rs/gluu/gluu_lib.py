@@ -313,6 +313,8 @@ class OxTrustAPIClient:
         if endpoint in config_endpoints:
             current_obj = self.uma_client.execute("GET", endpoint)
             self.logger.debug("Obtained object from HTTP GET: {}", current_obj)
+            if endpoint == "configuration/ldap":
+                current_obj = current_obj[0]
             for key, value in json_obj.items():
                 current_obj[key] = value
         elif endpoint in available_endpoints:
