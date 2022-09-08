@@ -356,6 +356,7 @@ class OxTrustAPIClient:
             if endpoint == 'saml/tr':
                 self.logger.debug("SAML Upsert requested, getting values from displayName attr")
                 tr_list = self.uma_client.execute("GET", "saml/tr/list")
+                self.logger.debug("current TRs are: {}", tr_list)
                 tr_list = [ tr.get('displayName') == json_obj['displayName'] for tr in tr_list ]
                 tr_list_size = len(tr_list)
                 if tr_list_size == 0:
