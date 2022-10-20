@@ -302,6 +302,7 @@ class OxTrustAPIClient:
                             "configuration/oxtrust/settings",
                             "configuration/settings",
                             "configuration/ldap",
+                            "configuration/smtp",
                             "acrs"
                             ]
         available_endpoints = {
