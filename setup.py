@@ -1,5 +1,5 @@
-# rs-midpoint is available under the MIT License. https://github.com/roundservices/rs-midpoint/
-# Copyright (c) 2021, Round Services LLC - https://roundservices.biz/
+# rs-gluu is available under the MIT License. https://github.com/RoundServices/rs-gluu/
+# Copyright (c) 2022, Round Services LLC - https://roundservices.biz/
 #
 # Author: Gustavo J Gallardo - ggallard@roundservices.biz
 #

@@ -1,5 +1,5 @@
 # rs-gluu is available under the MIT License. https://github.com/RoundServices/rs-gluu/
-# Copyright (c) 2021, Round Services LLC - https://roundservices.biz/
+# Copyright (c) 2022, Round Services LLC - https://roundservices.biz/
 #
 # Author: Ezequiel O Sandoval - esandoval@roundservices.biz
 #
