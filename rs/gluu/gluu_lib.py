@@ -249,7 +249,7 @@ class OxTrustAPIClient:
     """
 
     def __init__(self, api_base_endpoint, b64_client_credentials, default_testing_endpoint_path="users",
-                 logger=Logger("OxTrustAPIClient.py")):
+                 logger=Logger("OxTrustAPIClient.py"), is_gluu_45=False):
         """
         Params
         :param api_base_endpoint: for instance "https://gluu.myorg.com/identity/restv1/api/v1"
@@ -261,7 +261,7 @@ class OxTrustAPIClient:
         self.api_base_endpoint = api_base_endpoint
         self.default_testing_endpoint_path = default_testing_endpoint_path
         self.logger = logger
-        self.uma_client = UMAClient(api_base_endpoint, b64_client_credentials, logger, verify=False)
+        self.uma_client = UMAClient(api_base_endpoint, b64_client_credentials, logger, verify=False, is_gluu_45=is_gluu_45)
         self.validate_api()
 
     def validate_api(self):
