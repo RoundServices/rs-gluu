@@ -1,3 +1,3 @@
 # rs-gluu
 
-This repository is deprecated, please use: https://github.com/Identicum/sherpa-py-gluu
+This module is DEPRECATED. Code was migrated to https://github.com/identicum/sherpa-py-gluu/
